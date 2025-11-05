@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: stg_cases
+    description: Cleaned daily cases per country.
+    columns:
+      - name: report_date
+        tests: [not_null]
+      - name: iso_code
+        tests: [not_null]
+
+  - name: stg_vaccinations
+    description: Cleaned daily vaccinations per country.
+    columns:
+      - name: report_date
+        tests: [not_null]
+      - name: iso_code
+        tests: [not_null]
+
+  - name: stg_population
+    description: Cleaned population data per country.
+    columns:
+      - name: iso_code
+        tests: [unique, not_null]
+
+  - name: dim_location
+    description: Conformed location dimension.
+    columns:
+      - name: location_key
+        tests: [unique, not_null]
+      - name: iso_code
+        tests:
+          - relationships:
+              to: ref('stg_population')
+              field: iso_code
+
+  - name: dim_date
+    description: Date dimension.
+    columns:
+      - name: date_key
+        tests: [unique, not_null]
+
+  - name: fct_covid_daily
+    description: Day×country fact table.
+    columns:
+      - name: fact_key
+        tests: [unique, not_null]
+      - name: date_key
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: location_key
+        tests:
+          - relationships:
+              to: ref('dim_location')
+              field: location_key
+
+  - name: covid_country_metrics
+    description: Weekly aggregation for country analysis and visualization.

@@ -1,0 +1,31 @@
+name: "mini_dwh_covid"
+version: "1.0.0"
+profile: "mini_dwh"
+config-version: 2
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  mini_dwh_covid:
+    +materialized: view
+    staging:
+      +materialized: view
+    core:
+      +materialized: table  # Core dimensions og facts skal være tables
+    marts:
+      +materialized: view
+
+seeds:
+  mini_dwh_covid:
+    +schema: raw
+    +quote_columns: true

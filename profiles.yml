@@ -1,0 +1,12 @@
+mini_dwh:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: covid
+      password: covid
+      dbname: analytics
+      schema: covid
+      threads: 4
