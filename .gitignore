@@ -53,6 +53,5 @@ build/
 # Personal documentation / interpretations
 # =====================================================
 EXPLAINED_FOR_KIDS.md
-examples/README_QUERIES.md
-examples/README_PYTHON.md
+examples/
 
